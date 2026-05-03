@@ -16,7 +16,7 @@ const wss = new WebSocketServer({server});
 
 wss.on('connection',(socket,req) => {
    
-    const url = new URL(req.url!,"http://localhost:8080/");
+    const url = new URL(req.url!,"http://dummy");
     const userId = url.searchParams.get("userId");
 
     clients.set(userId,socket);
@@ -41,7 +41,12 @@ wss.on('connection',(socket,req) => {
     }
    });
 
-   socket.send("Connection achieved from the wss");
+   socket.send(
+  JSON.stringify({
+    type: "system",
+    message: "Connected successfully",
+  })
+);
 });
 
 
